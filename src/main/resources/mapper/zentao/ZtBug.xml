@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.more.datasources.mapper.zentao.ZtBugDao">
+
+	<!-- 总数查询,通过条件 -->
+	<select id="getBugInfoByModuleId" parameterType="java.lang.reflect.Array"
+		resultType="com.example.more.datasources.entity.zentao.BugInfo">
+		SELECT
+		status,
+		count(*) AS `count`
+		FROM
+		zt_bug
+		WHERE
+		module IN
+		<foreach collection="moduleIdList" item="moduleId" open="("
+			separator="," close=")">
+			<![CDATA[#{moduleId}]]>
+		</foreach>
+		AND deleted = '0'
+		GROUP BY
+		status
+
+
+	</select>
+
+	<!-- 总数查询,通过BuildID 版本ID条件 -->
+	<select id="getBugInfoByBuildId" parameterType="int"
+			resultType="com.example.more.datasources.entity.zentao.BugInfo">
+		SELECT
+		status,
+		count(*) AS `count`
+		FROM
+		zt_bug
+		WHERE
+		openedBuild = #{buildId}
+		AND deleted = '0'
+		GROUP BY
+		status
+	</select>
+
+	<!-- 其它SQL语句 -->
+
+	<!-- 总数查询,通过条件 -->
+	<select id="getBugListByBuildId" parameterType="int"
+			resultType="com.example.more.datasources.entity.zentao.ZtBug">
+		SELECT
+		b.id,
+		b.title,
+		b.severity,
+		b.`openedDate`,
+		u1.realname AS openedBy,
+		u2.realname AS assignedTo
+		FROM
+		zt_bug b
+		LEFT JOIN zt_user u1 ON b.openedBy = u1.account
+		LEFT JOIN zt_user u2 ON b.assignedTo = u2.account
+		WHERE
+		b.deleted = '0'
+		AND b.`status`='active'
+		AND openedBuild = #{buildId}
+		ORDER BY b.severity
+	</select>
+
+
+	<!-- 总数查询,通过条件 -->
+	<select id="getBugListByModuleId" parameterType="java.lang.reflect.Array"
+		resultType="com.example.more.datasources.entity.zentao.ZtBug">
+		SELECT
+		b.id,
+		b.title,
+		b.severity,
+		b.`openedDate`,
+		u1.realname AS openedBy,
+		u2.realname AS assignedTo
+		FROM
+		zt_bug b
+		LEFT JOIN zt_user u1 ON b.openedBy = u1.account
+		LEFT JOIN zt_user u2 ON b.assignedTo = u2.account
+		WHERE
+		b.deleted = '0'
+		AND b.`status`='active'
+		AND b.module IN
+		<foreach collection="moduleIdList" item="moduleId" open="("
+			separator="," close=")">
+				<![CDATA[#{moduleId}]]>
+		</foreach>
+		ORDER BY b.severity
+	</select>
+
+<!--	<select id="getBugAssignedToDistributeByBuildId" parameterType="int"
+			resultType="com.bbd.test.easyreport.entity.BugAssingedToDistribute">
+		SELECT
+		info.assignedTo as bugAssignedTo,
+		count(*) AS count
+		FROM
+		(
+		SELECT
+		b.id,
+		b.title,
+		b.severity,
+		u1.realname AS openedBy,
+		u2.realname AS assignedTo
+		FROM
+		zt_bug b
+		LEFT JOIN zt_user u1 ON b.openedBy = u1.account
+		LEFT JOIN zt_user u2
+		ON b.assignedTo = u2.account
+		WHERE
+		b.deleted = '0'
+		AND b.`status` = 'active'
+		AND b.openedBuild = #{buildId}
+		ORDER BY
+		b.severity
+		) AS info
+		GROUP BY
+		info.assignedTo
+	</select>
+
+	<select id="getBugAssignedToDistributeByModuleId" parameterType="java.lang.reflect.Array"
+		resultType="com.bbd.test.easyreport.entity.BugAssingedToDistribute">
+		SELECT
+		info.assignedTo as bugAssignedTo,
+		count(*) AS count
+		FROM
+		(
+		SELECT
+		b.id,
+		b.title,
+		b.severity,
+		u1.realname AS openedBy,
+		u2.realname AS assignedTo
+		FROM
+		zt_bug b
+		LEFT JOIN zt_user u1 ON b.openedBy = u1.account
+		LEFT JOIN zt_user u2
+		ON b.assignedTo = u2.account
+		WHERE
+		b.deleted = '0'
+		AND b.`status` = 'active'
+		AND b.module IN
+		<foreach collection="moduleIdList" item="moduleId" open="("
+			separator="," close=")">
+				<![CDATA[#{moduleId}]]>
+		</foreach>
+		ORDER BY
+		b.severity
+		) AS info
+		GROUP BY
+		info.assignedTo
+	</select>
+
+	<select id="getBugSeverityDistributeByBuildId" parameterType="int"
+			resultType="com.bbd.test.easyreport.entity.BugSeverityDistribute">
+		SELECT
+		info.severity as severity,
+		count(*) AS count
+		FROM
+		(
+		SELECT
+		b.id,
+		b.title,
+		b.severity,
+		u1.realname AS openedBy,
+		u2.realname AS assignedTo
+		FROM
+		zt_bug b
+		LEFT JOIN zt_user u1 ON b.openedBy = u1.account
+		LEFT JOIN zt_user u2
+		ON b.assignedTo = u2.account
+		WHERE
+		b.deleted = '0'
+		AND b.`status` = 'active'
+		AND b.openedBuild = #{buildId}
+		ORDER BY
+		b.severity
+		) AS info
+		GROUP BY
+		info.severity
+	</select>
+
+	<select id="getBugSeverityDistributeByModuleId" parameterType="java.lang.reflect.Array"
+		resultType="com.bbd.test.easyreport.entity.BugSeverityDistribute">
+				SELECT
+		info.severity as severity,
+		count(*) AS count
+		FROM
+		(
+		SELECT
+		b.id,
+		b.title,
+		b.severity,
+		u1.realname AS openedBy,
+		u2.realname AS assignedTo
+		FROM
+		zt_bug b
+		LEFT JOIN zt_user u1 ON b.openedBy = u1.account
+		LEFT JOIN zt_user u2
+		ON b.assignedTo = u2.account
+		WHERE
+		b.deleted = '0'
+		AND b.`status` = 'active'
+		AND b.module IN
+		<foreach collection="moduleIdList" item="moduleId" open="("
+			separator="," close=")">
+				<![CDATA[#{moduleId}]]>
+		</foreach>
+		ORDER BY
+		b.severity
+		) AS info
+		GROUP BY
+		info.severity
+	</select>
+
+	<select id="getCountByModuleId" parameterType="com.example.more.datasources.entity.zentao.ZtBugVO"	resultType="int">
+		select count(*) from zt_bug
+		<include refid="QUERY_WHERE_CLAUSE"/>
+	</select>-->
+
+	<!--<select id="getAddCountByBuildId" parameterType="com.example.more.datasources.entity.zentao.ZtBugVO"	resultType="int">-->
+		<!--select count(*) from zt_bug-->
+		<!--<include refid="QUERY_WHERE_CLAUSE"/>-->
+	<!--</select>-->
+
+
+
+
+	<!-- 全部条件(更多功能可以通过queryData扩展实现)  -->
+	<sql id="QUERY_WHERE_CLAUSE">
+		<where>
+
+			<if test="ztBugVO.moduleList != null and ztBugVO.moduleList.size > 0">
+			module IN
+				<foreach collection="ztBugVO.moduleList" item="moduleId" open="("
+					separator="," close=")">
+						<![CDATA[#{moduleId}]]>
+				</foreach>
+			</if>
+
+			<if test="ztBugVO.createDate != null and ztBugVO.createDate != ''"><![CDATA[AND openedDate like concat('%',#{ztBugVO.createDate},'%')]]></if>
+
+			<if test="ztBugVO.jiejueDate != null and ztBugVO.jiejueDate != ''"><![CDATA[AND resolvedDate like concat('%',#{ztBugVO.jiejueDate},'%')]]></if>
+
+			<if test="ztBugVO.guanbiDate != null and ztBugVO.guanbiDate != ''"><![CDATA[AND closedDate like concat('%',#{ztBugVO.guanbiDate},'%')]]></if>
+
+			<if test="ztBugVO.deleted != null and ztBugVO.deleted != ''"><![CDATA[AND deleted = #{ztBugVO.deleted}]]></if>
+		</where>
+	</sql>
+
+</mapper>

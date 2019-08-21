@@ -19,32 +19,40 @@ public class TailfLogs {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name="server_name")
-	private String server_name;
+	private String serverName;
 	@Column(name="project_id")
-	private Integer project_id;
+	private Integer projectId;
 	@Column(name="log_path")
-	private String log_path;
+	private String logPath;
 	@Column(name="log_name")
-	private String log_name;
+	private String logName;
 	@Column(name="create_time")
-	private Date create_time;
+	private Date createTime;
 
-	public TailfLogs(){
-		//默认无参构造方法
-	}
+//	public TailfLogs(){
+//		//默认无参构造方法
+//	}
 
-	@Override
-	public String toString() {
-		return "TailfLogs{" +
-				"id=" + id +
-				", server_name='" + server_name + '\'' +
-				", project_id=" + project_id +
-				", log_path='" + log_path + '\'' +
-				", log_name='" + log_name + '\'' +
-				", create_time=" + create_time +
-				'}';
-	}
+//	public TailfLogs(Integer id , String serverName) {
+//		this.id =id;
+//		this.serverName = serverName;
+//	}
 
+//	@Override
+//	public String toString() {
+//		return "TailfLogs{" +
+//				"id=" + id +
+//				", serverName='" + serverName + '\'' +
+//				", projectId=" + projectId +
+//				", logPath='" + logPath + '\'' +
+//				", logName='" + logName + '\'' +
+//				", createTime=" + createTime +
+//				'}';
+//	}
+
+
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Id
 	public int getId() {
 		return id;
 	}
@@ -53,51 +61,92 @@ public class TailfLogs {
 		this.id = id;
 	}
 
-	public String getServer_name() {
-		return server_name;
+//	public TailfLogs(int id, String serverName, Integer projectId, String logPath, String logName, Date createTime) {
+//		this.id = id;
+//		this.serverName = serverName;
+//		this.projectId = projectId;
+//		this.logPath = logPath;
+//		this.logName = logName;
+//		this.createTime = createTime;
+//	}
+
+	/**
+	 * 获取 服务名称
+	 * @return
+	 */
+	public String getServerName(){
+		return serverName;
 	}
 
-	public void setServer_name(String server_name) {
-		this.server_name = server_name;
+	/**
+	 * 设置 服务名称
+	 * @param serverName
+	 */
+	public void setServerName(String serverName){
+		this.serverName = serverName;
 	}
 
-	public Integer getProject_id() {
-		return project_id;
+	/**
+	 * 获取 服务器id
+	 * @return
+	 */
+	public Integer getProjectId(){
+		return projectId;
 	}
 
-	public void setProject_id(Integer project_id) {
-		this.project_id = project_id;
+	/**
+	 * 设置 服务器id
+	 * @param projectId
+	 */
+	public void setProjectId(Integer projectId){
+		this.projectId = projectId;
 	}
 
-	public String getLog_path() {
-		return log_path;
+	/**
+	 * 获取 日志路径
+	 * @return
+	 */
+	public String getLogPath(){
+		return logPath;
 	}
 
-	public void setLog_path(String log_path) {
-		this.log_path = log_path;
+	/**
+	 * 设置 日志路径
+	 * @param logPath
+	 */
+	public void setLogPath(String logPath){
+		this.logPath = logPath;
 	}
 
-	public String getLog_name() {
-		return log_name;
+	/**
+	 * 获取 日志文件名称
+	 * @return
+	 */
+	public String getLogName(){
+		return logName;
 	}
 
-	public void setLog_name(String log_name) {
-		this.log_name = log_name;
+	/**
+	 * 设置 日志文件名称
+	 * @param logName
+	 */
+	public void setLogName(String logName){
+		this.logName = logName;
 	}
 
-	public Date getCreate_time() {
-		return create_time;
+	/**
+	 * 获取 创建时间
+	 * @return
+	 */
+	public Date getCreateTime(){
+		return createTime;
 	}
 
-	public void setCreate_time(Date create_time) {
-		this.create_time = create_time;
-	}
-
-	public TailfLogs(String server_name, Integer project_id, String log_path, String log_name, Date create_time) {
-		this.server_name = server_name;
-		this.project_id = project_id;
-		this.log_path = log_path;
-		this.log_name = log_name;
-		this.create_time = create_time;
+	/**
+	 * 设置 创建时间
+	 * @param createTime
+	 */
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
 	}
 }

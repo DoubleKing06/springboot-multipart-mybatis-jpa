@@ -29,30 +29,30 @@ public class TailfLogs {
 	@Column(name="create_time")
 	private Date createTime;
 
-//	public TailfLogs(){
-//		//默认无参构造方法
-//	}
+	public TailfLogs(){
+		//默认无参构造方法
+	}
 
-//	public TailfLogs(Integer id , String serverName) {
-//		this.id =id;
-//		this.serverName = serverName;
-//	}
+	public TailfLogs(Integer id , String serverName) {
+		this.id =id;
+		this.serverName = serverName;
+	}
 
-//	@Override
-//	public String toString() {
-//		return "TailfLogs{" +
-//				"id=" + id +
-//				", serverName='" + serverName + '\'' +
-//				", projectId=" + projectId +
-//				", logPath='" + logPath + '\'' +
-//				", logName='" + logName + '\'' +
-//				", createTime=" + createTime +
-//				'}';
-//	}
+	@Override
+	public String toString() {
+		return "TailfLogs{" +
+				"id=" + id +
+				", serverName='" + serverName + '\'' +
+				", projectId=" + projectId +
+				", logPath='" + logPath + '\'' +
+				", logName='" + logName + '\'' +
+				", createTime=" + createTime +
+				'}';
+	}
 
 
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	public int getId() {
 		return id;
 	}
@@ -61,14 +61,14 @@ public class TailfLogs {
 		this.id = id;
 	}
 
-//	public TailfLogs(int id, String serverName, Integer projectId, String logPath, String logName, Date createTime) {
-//		this.id = id;
-//		this.serverName = serverName;
-//		this.projectId = projectId;
-//		this.logPath = logPath;
-//		this.logName = logName;
-//		this.createTime = createTime;
-//	}
+	public TailfLogs(int id, String serverName, Integer projectId, String logPath, String logName, Date createTime) {
+		this.id = id;
+		this.serverName = serverName;
+		this.projectId = projectId;
+		this.logPath = logPath;
+		this.logName = logName;
+		this.createTime = createTime;
+	}
 
 	/**
 	 * 获取 服务名称
